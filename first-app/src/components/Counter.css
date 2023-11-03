@@ -1,0 +1,9 @@
+.counter-main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.count-btn{
+    flex-direction: row;
+}

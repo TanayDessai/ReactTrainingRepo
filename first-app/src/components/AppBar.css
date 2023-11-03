@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+.app-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #CDF5FD;
+    color: #fff;
+    padding: 5px;
+    border-radius: 0 0 15px 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    box-shadow: 0 2px 2px #ccc;
+}
+
+.app-name{
+    color: #00A9FF;
+    margin-left: 10px;
+    font-family: Poppins;
+}
+
+button{
+    background-color: #fff;
+    color: #00A9FF;
+    border: 1px solid #00A9FF;
+    border-radius: 15px;
+    padding: 5px 10px;
+    min-width: 100px;
+    margin-right: 20px;
+    cursor: pointer;
+    font-family: Poppins;
+}
+
+button:hover{
+    background-color: #00A9FF;
+    color: #fff;
+}

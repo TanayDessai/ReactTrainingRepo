@@ -1,0 +1,11 @@
+.mainDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.text{
+    color: rgb(240, 127, 6);
+    font-size: 30px;
+    font-weight: bold;
+}
