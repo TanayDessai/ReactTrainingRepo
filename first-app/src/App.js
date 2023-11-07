@@ -5,6 +5,7 @@ import Counter from './components/Counter';
 import SecondPage from './components/SecondPage';
 import FirstPage from './components/FirstPage';
 import { useState } from 'react';
+import { CustomHook } from './components/CustomHook';
 
 function App() {
   const buttonNames = ["Home", "About", "Contact"];
@@ -24,7 +25,7 @@ function App() {
   return (
     <div>
       <AppBar appName="MyApp" buttonNames={buttonNames} />
-      <Hello name="Tanay" isLoggedIn={true} />
+      {/* <Hello name="Tanay" isLoggedIn={true} />
       <Counter />
       <div className='pageName'>
         {showFirstPage && <FirstPage />}
@@ -33,7 +34,8 @@ function App() {
       <div className="btn-div">
         <button onClick={handleClickFirstPage}>ToggleFirstPage</button>
         <button onClick={handleClickSecondPage}>ToggleSecondPage</button>
-      </div>
+      </div> */}
+      <CustomHook/>
     </div>
   );
 }
