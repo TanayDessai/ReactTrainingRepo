@@ -1,16 +1,22 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useRef } from "react";
+import {
+  Row,
+  Col,
+  Navbar,
+  Nav,
+  Offcanvas,
+  Button,
+} from "react-bootstrap";
 import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
 import TaskCategories from "./TaskCategories";
-import useLocalStorage from "./useLocalStorage";
-import { Form, Button, Row, Col, Container } from "react-bootstrap";
 
 const TaskManager = () => {
-  const [tasks, setTasks] = useLocalStorage("tasks", []);
-  const [categories, setCategories] = useLocalStorage("categories", []);
-  const [currentCategory, setCurrentCategory] = useState("");
+  const [tasks, setTasks] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
 
-  const taskFormRef = useRef(null);
+  const taskFormRef = useRef();
 
   const addTask = (task) => {
     setTasks([...tasks, { ...task, id: tasks.length + 1 }]);
@@ -24,52 +30,64 @@ const TaskManager = () => {
     setCategories(categories.filter((c) => c !== category));
   };
 
-  const assignTaskToCategory = (taskId, category) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, category } : task
-    );
-    setTasks(updatedTasks);
-  };
-
-  const sortedTasks = useMemo(() => {
-    // Memoize the sorted task list based on priorities
-    const groupedTasks = ["High", "Medium", "Low"].map((priority) => ({
-      priority,
-      tasks: tasks.filter(
-        (task) =>
-          task.priority === priority &&
-          (!currentCategory || task.category === currentCategory)
-      ),
-    }));
-    return groupedTasks;
-  }, [tasks, currentCategory]);
+    const deleteTask = (taskId) => {
+        setTasks(tasks.filter((task) => task.id !== taskId));
+    };
 
   return (
-    <Container>
+    <div>
+      <Navbar
+        bg="light"
+        variant="light"
+        className="justify-content-between"
+        style={{ padding: "15px" }}
+      >
+        <Navbar.Brand className="mr-auto">Task-List Manager</Navbar.Brand>
+        <Nav className="ml-auto">
+          <Button
+            variant="outline-dark"
+            onClick={() => setShowOffcanvas(true)}
+            className="ml-auto"
+          >
+            Add Task
+          </Button>
+        </Nav>
+      </Navbar>
+
       <Row>
         <Col>
-          <TaskForm
-            addTask={addTask}
-            priorities={["Low", "Medium", "High"]}
-            ref={taskFormRef}
+          <TaskList
+            categories={categories}
+            tasks={tasks}
+            deleteTask={deleteTask}
           />
         </Col>
       </Row>
-      <Row>
-        <Col>
-          <TaskList tasks={sortedTasks} />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
+
+      <Offcanvas
+        show={showOffcanvas}
+        onHide={() => setShowOffcanvas(false)}
+        placement="end"
+      >
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Add Task</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <TaskForm
+            addTask={addTask}
+            priorities={["Low", "Medium", "High"]}
+            categories={categories}
+            ref={taskFormRef}
+          />
+
           <TaskCategories
             categories={categories}
             addCategory={addCategory}
             removeCategory={removeCategory}
           />
-        </Col>
-      </Row>
-    </Container>
+        </Offcanvas.Body>
+      </Offcanvas>
+    </div>
   );
 };
 
