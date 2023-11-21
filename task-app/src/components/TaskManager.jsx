@@ -19,7 +19,10 @@ const TaskManager = () => {
   const taskFormRef = useRef();
 
   const addTask = (task) => {
-    setTasks([...tasks, { ...task, id: tasks.length + 1 }]);
+    setTasks([
+      ...tasks,
+      { ...task, id: tasks.length + 1},
+    ]);
   };
 
   const addCategory = (category) => {
